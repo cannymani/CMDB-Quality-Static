@@ -1,0 +1,31 @@
+{
+  "name": "cmdb-kpi-dashboard",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "recharts": "2.15.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "@vitejs/plugin-react": "4.7.0",
+    "oxlint": "1.80.0",
+    "playwright-core": "1.50.1",
+    "typescript": "6.0.3",
+    "vite": "7.3.6"
+  },
+  "description": "Executive CMDB quality dashboard prototype (Compliance / Completeness / Correctness)",
+  "optionalDependencies": {
+    "@oxlint/binding-linux-x64-gnu": "1.80.0"
+  }
+}

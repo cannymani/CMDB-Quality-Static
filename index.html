@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-VPo50M2dKYPg0gS+2Mj2RDYFYu3ZIdKGRyEzj3cpFis='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+    <link
+      rel="preload"
+      href="./assets/fonts/MBCorpoSTextOffice-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>CMDB Quality — Executive Dashboard</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "./js/vendor/react.js",
+          "react-dom/client": "./js/vendor/react-dom-client.js",
+          "recharts": "./js/vendor/recharts.js",
+          "htm/react": "./js/vendor/htm-react.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
