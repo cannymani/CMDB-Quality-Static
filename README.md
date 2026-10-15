@@ -60,10 +60,12 @@ You don't need a GitHub Actions workflow.
 | `#/attribute/<pillarId>/<attribute>[/<categoryId>]` | Attribute drill-down, optionally scoped to one class; attribute values are URL-encoded. |
 
 Every page includes the global search (audits, services, pillars, categories, attributes, departments,
-owners; ↑ ↓ Enter Esc), the **View** selector, and a filter bar with Departments and the reporting
-period. Owner scopes are applied through owner search results, and service scopes through service
-navigation; both appear as chips while active. There are no Department owner or Services filter-bar
-dropdowns.
+owners; ↑ ↓ Enter Esc), the **View** selector, and a reporting-period segment. Compliance and
+Correctness dashboards, their service/audit drill-downs, and legacy View screens show Departments,
+Department owner and Services filters. Overview has only the reporting-period control; an active
+department scope appears as a clearable Departments chip. Completeness and its pillar/attribute
+drill-downs show Departments only. Owner and service selections remain active when their dropdowns
+are hidden and appear as chips; the Owner chip clears its owner scope.
 
 Pillar pages have a pillar selector instead of a Back link; the other-pillar shortcut cards have been
 removed. Attribute cards and gap-table rows open the attribute drill-down. Its department breakdown
