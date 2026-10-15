@@ -349,6 +349,12 @@ export default function App() {
       window.location.hash = `#/service/${picked}`;
     }
   };
+  const completenessContext =
+    screen === 'pillardrill' ||
+    screen === 'attributedrill' ||
+    (screen === 'dashboard' && kpi === 'completeness');
+  const overviewContext = screen === 'dashboard' && kpi === 'overview';
+  const auditFilters = !completenessContext && !overviewContext;
   return html`<div className="app">
     <div className="appbar">
       <button className="logo" onClick=${goHome} title="CMDB Quality — Overview">
@@ -392,7 +398,12 @@ export default function App() {
         >
       </div>
     </div>
-    <${FilterBar} filters=${filters} onChange=${changeFilters} />
+    <${FilterBar}
+      filters=${filters}
+      onChange=${changeFilters}
+      auditFilters=${auditFilters}
+      departmentFilter=${!overviewContext}
+    />
     <main className="content">
       ${
         screen !== 'dashboard' &&

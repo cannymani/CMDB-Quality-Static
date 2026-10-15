@@ -243,7 +243,10 @@ export function attentionItems(rows, duration) {
 /** Per-service card for the executive dashboard, scoped to one KPI. */
 
 export function serviceCards(rows, duration, kpi) {
-  const cards = SERVICES.map((service) => {
+  const servicesInScope = new Set(
+    rows.filter((row) => row.kpi === kpi).map((row) => row.serviceId),
+  );
+  const cards = SERVICES.filter((service) => servicesInScope.has(service.id)).map((service) => {
     const slice = rows.filter((r) => r.serviceId === service.id && r.kpi === kpi);
     const score = Number(scoreAt(slice, 0).toFixed(1));
     const prev = scoreAt(slice, Math.min(duration - 1, 11));

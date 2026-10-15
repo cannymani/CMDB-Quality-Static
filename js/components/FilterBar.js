@@ -1,6 +1,6 @@
 import { html } from 'htm/react';
 import { useState, Fragment } from 'react';
-import { DEPARTMENTS, SERVICES } from '../data/demo.js';
+import { DEPARTMENTS, OWNERS, SERVICES } from '../data/demo.js';
 const DURATIONS = [
   {
     value: 3,
@@ -90,13 +90,26 @@ function MultiSelect({ label, options, selected, onChange, searchable, icon }) {
     }
   </div>`;
 }
-export function FilterBar({ filters, onChange }) {
+export function FilterBar({
+  filters,
+  onChange,
+  auditFilters = false,
+  departmentFilter = true,
+}) {
   const active =
     filters.departments.length + filters.owners.length + filters.services.length > 0 ||
     filters.duration !== 12;
+  const selectedDepartmentNames = filters.departments.map(
+    (id) => DEPARTMENTS.find((department) => department.id === id)?.name ?? id,
+  );
+  const departmentChipLabel =
+    selectedDepartmentNames.length <= 2
+      ? selectedDepartmentNames.join(', ')
+      : `${selectedDepartmentNames.length} selected`;
   return html`<div className="filterbar">
     <span className="filterbar-lbl">Filters</span
-    ><${MultiSelect}
+    >${departmentFilter &&
+    html`<${MultiSelect}
       label="Departments"
       icon="◍"
       searchable
@@ -111,7 +124,34 @@ export function FilterBar({ filters, onChange }) {
           ...filters,
           departments,
         })}
-    /><span className="filterbar-div" aria-hidden />
+    />`}${auditFilters &&
+    html`<${Fragment}><${MultiSelect}
+      label="Department owner"
+      icon="◉"
+      options=${OWNERS.map((o) => ({
+        id: o,
+        name: o,
+      }))}
+      selected=${filters.owners}
+      onChange=${(owners) =>
+        onChange({
+          ...filters,
+          owners,
+        })}
+    /><${MultiSelect}
+      label="Services"
+      icon="◈"
+      options=${SERVICES.map((s) => ({
+        id: s.id,
+        name: s.name,
+      }))}
+      selected=${filters.services}
+      onChange=${(services) =>
+        onChange({
+          ...filters,
+          services,
+        })}
+    /></${Fragment}>`}${departmentFilter && html`<span className="filterbar-div" aria-hidden />`}
     <div className="seg">
       ${DURATIONS.map(
         (d) =>
@@ -130,10 +170,20 @@ export function FilterBar({ filters, onChange }) {
     </div>
     <div className="filters-spacer" />
     <span className="filterbar-scope"
-      ><b className="num">${filters.departments.length || DEPARTMENTS.length}</b> departments</span
-    >${filters.owners.length > 0 &&
+      ><b className="num">${filters.departments.length || DEPARTMENTS.length}</b> departments${
+        auditFilters &&
+        html` · <b className="num">${filters.services.length || SERVICES.length}</b> services · <b className="num">${filters.owners.length || OWNERS.length}</b> owners`
+      }</span
+    >${!departmentFilter && filters.departments.length > 0 &&
+    html`<button
+      className="filterbar-chip"
+      aria-label="Clear department filter"
+      onClick=${() => onChange({ ...filters, departments: [] })}
+    >
+      Departments: ${departmentChipLabel} <span aria-hidden="true">✕</span></button>`}${!auditFilters && filters.owners.length > 0 &&
     html`<button className="filterbar-chip" aria-label="Clear owner filter" onClick=${() => onChange({ ...filters, owners: [] })}>
-      Owner: ${filters.owners.join(', ')} <span aria-hidden="true">✕</span></button>`}${filters.services.length > 0 &&
+      Owner: ${filters.owners.join(', ')} <span aria-hidden="true">✕</span></button>`}${!auditFilters &&
+    filters.services.length > 0 &&
     html`<span className="filterbar-chip">
       Service: ${filters.services.map((id) => SERVICES.find((s) => s.id === id)?.short ?? id).join(', ')}</span>`}${
       active &&
